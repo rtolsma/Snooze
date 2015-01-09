@@ -1,0 +1,77 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    tools:ignore="MergeRootFrame">
+
+    <LinearLayout
+        android:id="@+id/linear_layout_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:baselineAligned="false"
+        android:weightSum="10">
+
+
+    <!-- in this linear layout, the fragments will be displayed-->
+
+
+
+
+
+        <!-->  Below is the code for the icons to switch fragment views <-->
+
+
+        <TableRow
+            android:id="@+id/FragmentViewSwitcher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:layout_gravity="bottom"
+            android:background="@color/white"
+            android:divider="@color/black"
+                >
+
+            <ImageButton
+                android:id="@+id/alarm_fragment_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:onClick="do somethin TODO set src"
+                android:src="@drawable/clock" />
+
+            <ImageButton
+                android:id="@+id/stopwatch_fragment_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:onClick="do somethin TODO set src"
+                android:src="@drawable/clock"
+
+                />
+
+            <ImageButton
+                android:id="@+id/timer_fragment_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:onClick="do somethin TODO set src"
+                android:src="@drawable/clock"
+
+                />
+
+
+        </TableRow>
+
+
+    </LinearLayout>
+</RelativeLayout>

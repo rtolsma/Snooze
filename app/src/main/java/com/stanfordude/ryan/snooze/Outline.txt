@@ -1,0 +1,16 @@
+        Trying to "copy" apple's timer apps
+
+The main activity UI will have a button bar at the bottom to switch between fragments
+The action bar or a button will be used to create new values
+  The alarm fragment, will have a scrollable list of alarm times, which will show the time property,
+  and if the alarm is set.
+
+    The alarm times are displayed using a ListView
+
+
+
+
+
+  Questions:
+
+  How do you programatically use a UI outline, and display it multiple times with different inner values? i.e: like object instantiation
