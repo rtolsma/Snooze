@@ -1,3 +1,7 @@
+<!-- This is the main activity xml view page. The top part of the code specifies the
+icons at the bottom of the screen that switch which fragment is displayed. Beneath that
+is a simple linear layout container for the fragments to be displayed in -->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
@@ -6,28 +10,12 @@
     tools:context=".MainActivity"
     tools:ignore="MergeRootFrame">
 
-    <LinearLayout
-        android:id="@+id/linear_layout_1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:baselineAligned="false"
-        android:weightSum="10">
+
+    <!-->  Below is the code for the icons to switch fragment views <-->
 
 
-    <!-- in this linear layout, the fragments will be displayed-->
-
-
-
-
-
-        <!-->  Below is the code for the icons to switch fragment views <-->
-
-
-        <TableRow
-            android:id="@+id/FragmentViewSwitcher"
+    <TableRow
+        android:id="@+id/fragment_view_switcher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -44,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="true"
-                android:onClick="do somethin TODO set src"
+                android:onClick="displayAlarmFragment"
                 android:src="@drawable/clock" />
 
             <ImageButton
@@ -53,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="true"
-                android:onClick="do somethin TODO set src"
+                android:onClick="displayAlarmFragment"
                 android:src="@drawable/clock"
 
                 />
@@ -64,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:clickable="true"
-                android:onClick="do somethin TODO set src"
+                android:onClick="displayAlarmFragment"
                 android:src="@drawable/clock"
 
                 />
@@ -73,5 +61,18 @@
         </TableRow>
 
 
+    <!-- in this linear layout, the fragments will be displayed-->
+
+
+    <LinearLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="9"
+        android:orientation="vertical"
+        android:layout_above="@id/fragment_view_switcher">
+
     </LinearLayout>
+
+
 </RelativeLayout>

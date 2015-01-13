@@ -1,89 +1,56 @@
 package com.stanfordude.ryan.snooze.Alarm;
 
 import android.app.Activity;
-import android.content.DialogInterface;
+import android.app.DialogFragment;
+import android.app.TimePickerDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
+import android.widget.TimePicker;
 
 import com.stanfordude.ryan.snooze.R;
-
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AlarmFragment.OnFragmentInteractionListener} interface
+ * {@link CreateAlarmSetting.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
 
+/* This fragment is put into view when the "add" button is pressed in the AlarmFragment class
+it allows the user to create an alarm setting, and returns that setting in some form to the AlarmFragment
+class to put in the listview.
 
-/*
-    This Fragment is used to display the listview containing alarm settings
+Also, when an existing list_item in the AlarmFragment is pressed, this fragment will be displayed with the current list_item setting
+and will permit editing of an alarm setting.
+
+For convenience sake, I'll use android's existing Time Picker
  */
 
 
-public class AlarmFragment extends Fragment implements View.OnClickListener {
 
-    private ListView listView;
-    private ArrayAdapter<String> arrayAdapter;
-    private ArrayList<Time> timeList;
+public class CreateAlarmSetting extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
-
-    // the fragment initialization parameters for the Bundle
-    private static final String LIST_VIEW = "AlarmFragmentListView";
-    //the objects that recieve the values from the getArguments.getString("parameter")
-    ;
 
     private OnFragmentInteractionListener mListener;
 
-
-    @Override
-    public void onClick(View v) {
-
-        switch (v.getId()) {
-            case R.id.add_alarm_setting:
-                //add a fragment that will enable the user to specify the timer settings, the i.e, CreateAlarmSetting class
-                break;
-
-
-        }
-    }
-
-
-    /*
-    Below is the fragment lifecycle methods
-     */
-
-
-    public AlarmFragment() {
+    public CreateAlarmSetting() {
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            listView = (ListView) savedInstanceState.get(LIST_VIEW);
-        }
-    }
+    /*
+    Below are a few of the Fragment lifecycle methods
+     */
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //or getView().findViewById I'm not currently sure
-        listView = (ListView) getActivity().findViewById(R.id.alarm_fragment_listview);
-
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_alarm, container, false);
-        Button addAlarmSetting = (Button) v.findViewById(R.id.add_alarm_setting);
-        addAlarmSetting.setOnClickListener(this);
+        return inflater.inflate(R.layout.fragment_create_alarm_setting, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -110,6 +77,16 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
         mListener = null;
     }
 
+    /*
+    Below is the required method for implementing the OnSetTimeListener Interface
+     */
+
+    @Override
+    public void onTimeSet(TimePicker tp, int hour, int min) {
+
+
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -121,8 +98,6 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-
-
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);

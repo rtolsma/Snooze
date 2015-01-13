@@ -4,7 +4,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -52,6 +51,22 @@ public class MainActivity extends ActionBarActivity implements AlarmFragment.OnF
         return super.onOptionsItemSelected(item);
     }
 
+
+        /*
+        Methods for displaying fragments
+        TODO: In these activities have the FragmentTransaction pop the existing fragment being displayed before adding the new one
+         */
+
+    public void displayAlarmFragment(View v) {
+        AlarmFragment frag = new AlarmFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_container, frag);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+
+
+    }
 
 
 }
