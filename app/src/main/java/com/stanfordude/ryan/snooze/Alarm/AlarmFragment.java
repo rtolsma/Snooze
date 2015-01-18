@@ -50,6 +50,8 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.add_alarm_setting:
                 //add a fragment that will enable the user to specify the timer settings, the i.e, CreateAlarmSetting class
+                new CreateAlarmSetting().show(getFragmentManager().beginTransaction(), "tag-do something with");
+
                 break;
 
 
@@ -84,6 +86,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
         View v = inflater.inflate(R.layout.fragment_alarm, container, false);
         Button addAlarmSetting = (Button) v.findViewById(R.id.add_alarm_setting);
         addAlarmSetting.setOnClickListener(this);
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

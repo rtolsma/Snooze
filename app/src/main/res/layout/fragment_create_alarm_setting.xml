@@ -1,13 +1,57 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.stanfordude.ryan.snooze.Alarm.CreateAlarmSetting">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <!-- This layout is for the custom dialog used to create the new alarm settings
+            when the "Add" button is pressed in the fragment_alarm layout -->
 
-</FrameLayout>
+    <!-- Maybe put the items inside a listview for scrollability?-->
+
+    <TextView
+        android:id="@+id/alarm_fragment_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="This is a title for the create alarm setting fragment dialog" />
+
+    <TimePicker
+        android:id="@+id/alarm_fragment_dialog_timepicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/alarm_fragment_dialog_title"
+
+        />
+
+    <NumberPicker
+        android:id="@+id/alarm_fragment_dialog_numberpicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/alarm_fragment_dialog_timepicker" />
+
+    <LinearLayout
+        android:id="@+id/alarm_fragment_dialog_button_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/alarm_fragment_dialog_cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/alarm_fragment_dialog_set_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Set"
+            android:layout_weight="1" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,15 +1,20 @@
 package com.stanfordude.ryan.snooze.Alarm;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.NumberPicker;
 import android.widget.TimePicker;
+import android.app.Dialog;
+import android.widget.Button;
 
 import com.stanfordude.ryan.snooze.R;
 
@@ -32,26 +37,45 @@ For convenience sake, I'll use android's existing Time Picker
 
 
 
-public class CreateAlarmSetting extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
+public class CreateAlarmSetting extends DialogFragment implements DialogInterface.OnClickListener {
 
+    /*
+    the isEdit variable is set to true when an existing alarm time is clicked, this will add the
+    "delete" button to the dialog, to possibly delete the item from the listview
+     */
+    private boolean isEdit = false;
+    public static final String ISEDIT_PARAM = "isEdit";
+
+    private TimePicker timePicker;
+    private NumberPicker numberPicker;
+    private Button cancelButton, editButton, setButton;
 
     private OnFragmentInteractionListener mListener;
 
     public CreateAlarmSetting() {
-        // Required empty public constructor
+
     }
 
     /*
     Below are a few of the Fragment lifecycle methods
      */
 
+    public void setArguments(Bundle bundle) {
+        isEdit = bundle.getBoolean(ISEDIT_PARAM);
+    }
+
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_alarm_setting, container, false);
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(R.layout.fragment_create_alarm_setting);
+        builder.setTitle("Create a new Alarm Setting");
+        builder.setNegativeButton()
+
+
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -82,8 +106,12 @@ public class CreateAlarmSetting extends DialogFragment implements TimePickerDial
      */
 
     @Override
-    public void onTimeSet(TimePicker tp, int hour, int min) {
+    public void onClickListener(DialogInterface dialog, int id) {
+        switch (id) {
+            case R.id.alarm
 
+
+        }
 
     }
 

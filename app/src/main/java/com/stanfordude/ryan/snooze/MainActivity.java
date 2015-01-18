@@ -12,11 +12,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.stanfordude.ryan.snooze.Alarm.AlarmFragment;
+import com.stanfordude.ryan.snooze.Alarm.CreateAlarmSetting;
 
 import java.net.URI;
 
 
-public class MainActivity extends ActionBarActivity implements AlarmFragment.OnFragmentInteractionListener{
+public class MainActivity extends ActionBarActivity implements AlarmFragment.OnFragmentInteractionListener, CreateAlarmSetting.OnFragmentInteractionListener {
+
+
+    FragmentManager fragmentManager = getFragmentManager();
+    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+    AlarmFragment alarmFragment;
+
+
 
     public void onFragmentInteraction(Uri uri) {}
     @Override
@@ -58,10 +66,9 @@ public class MainActivity extends ActionBarActivity implements AlarmFragment.OnF
          */
 
     public void displayAlarmFragment(View v) {
-        AlarmFragment frag = new AlarmFragment();
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_container, frag);
+        if (alarmFragment != null && alarmFragment.isVisible()) return;
+        alarmFragment = new AlarmFragment();
+        fragmentTransaction.replace(R.id.fragment_container, alarmFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 

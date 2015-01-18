@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- This file is for grouping miscellaneous items and containers that need a
+    predefined design but must be added dynamically in code , I don't like this
+    because it seems junky/messy, but I'm sticking with it for now because
+    I don't want to define the layouts in code which is messier-->
+
+    <Button
+        android:id="@+id/alarm_fragment_dialog_edit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Button" />
+
+
+</RelativeLayout>
