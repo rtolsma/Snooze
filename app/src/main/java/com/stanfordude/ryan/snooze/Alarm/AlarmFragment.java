@@ -1,7 +1,6 @@
 package com.stanfordude.ryan.snooze.Alarm;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -33,7 +32,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
 
     private ListView listView;
     private ArrayAdapter<String> arrayAdapter;
-    private ArrayList<Time> timeList;
+    private ArrayList<AlarmSetting> alarmSettingList;
 
 
     // the fragment initialization parameters for the Bundle

@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.stanfordude.ryan.snooze.Alarm.CreateAlarmSetting">
+    tools:context="com.stanfordude.ryan.snooze.Alarm.CreateAlarmSetting"
+    android:id="@+id/fragment_create_alarm_setting">
 
     <!-- This layout is for the custom dialog used to create the new alarm settings
             when the "Add" button is pressed in the fragment_alarm layout -->
@@ -14,8 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:text="This is a title for the create alarm setting fragment dialog" />
-
+        android:text="Create an Alarm Setting" />
+    <!-- Used for setting alarm time-->
     <TimePicker
         android:id="@+id/alarm_fragment_dialog_timepicker"
         android:layout_width="wrap_content"
@@ -23,10 +24,10 @@
         android:layout_below="@id/alarm_fragment_dialog_title"
 
         />
-
+    <!--Used for the length between snoozes-->
     <NumberPicker
         android:id="@+id/alarm_fragment_dialog_numberpicker"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/alarm_fragment_dialog_timepicker" />
 
@@ -44,10 +45,10 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/alarm_fragment_dialog_set_button"
+            android:id="@+id/alarm_fragment_dialog_create_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Set"
+            android:text="Create"
             android:layout_weight="1" />
 
 
