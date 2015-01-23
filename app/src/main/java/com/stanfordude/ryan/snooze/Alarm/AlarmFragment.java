@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.stanfordude.ryan.snooze.R;
 
@@ -76,8 +77,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //or getView().findViewById I'm not currently sure
         listView = (ListView) getActivity().findViewById(R.id.alarm_fragment_listview);
 
@@ -85,6 +85,8 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
         View v = inflater.inflate(R.layout.fragment_alarm, container, false);
         Button addAlarmSetting = (Button) v.findViewById(R.id.add_alarm_setting);
         addAlarmSetting.setOnClickListener(this);
+
+
         return v;
     }
 

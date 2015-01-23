@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.stanfordude.ryan.snooze.Alarm.AlarmFragment;
 import com.stanfordude.ryan.snooze.Alarm.CreateAlarmSetting;
@@ -27,6 +28,8 @@ public class MainActivity extends ActionBarActivity implements AlarmFragment.OnF
 
 
     public void onFragmentInteraction(Uri uri) {}
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,8 @@ public class MainActivity extends ActionBarActivity implements AlarmFragment.OnF
         if (savedInstanceState == null) {
 
         }
+
+
     }
 
 

@@ -15,44 +15,72 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:textSize="20dp"
         android:text="Create an Alarm Setting" />
-    <!-- Used for setting alarm time-->
-    <TimePicker
-        android:id="@+id/alarm_fragment_dialog_timepicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/alarm_fragment_dialog_title"
 
-        />
-    <!--Used for the length between snoozes-->
-    <NumberPicker
-        android:id="@+id/alarm_fragment_dialog_numberpicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/alarm_fragment_dialog_timepicker" />
 
-    <LinearLayout
-        android:id="@+id/alarm_fragment_dialog_button_container"
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/alarm_fragment_dialog_cancel_button"
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/alarm_fragment_dialog_title"
+        android:layout_above="@+id/alarm_fragment_dialog_cancel_button">
+        <!-- Used for setting alarm time-->
+        <TimePicker
+            android:id="@+id/alarm_fragment_dialog_timepicker"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:layout_weight="1" />
+            android:layout_below="@id/alarm_fragment_dialog_title"
 
-        <Button
-            android:id="@+id/alarm_fragment_dialog_create_button"
-            android:layout_width="wrap_content"
+            />
+        <!--Used for the length between snoozes-->
+        <NumberPicker
+            android:id="@+id/alarm_fragment_dialog_numberpicker"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create"
-            android:layout_weight="1" />
+            android:layout_below="@id/alarm_fragment_dialog_timepicker"
+
+            />
+
+    </TableLayout>
 
 
-    </LinearLayout>
+    <!--  <LinearLayout
+          android:id="@+id/alarm_fragment_dialog_button_container"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:layout_alignParentBottom="true"
+              >
+          <Button
+              android:id="@+id/alarm_fragment_dialog_cancel_button"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Cancel"
+              android:layout_alignParentBottom="true"
+              android:layout_alignParentLeft="true"
+              android:layout_weight="1" />
+
+          <Button
+              android:id="@+id/alarm_fragment_dialog_delete_button"
+              android:layout_width="0dp"
+              android:layout_height="0dp"
+              android:layout_toRightOf="@id/alarm_fragment_dialog_cancel_button"
+              android:layout_weight="1"
+              />
+
+          <Button
+              android:id="@+id/alarm_fragment_dialog_create_button"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Create"
+              android:layout_alignParentBottom="true"
+              android:layout_alignParentRight="true"
+              android:layout_weight="1" />
+
+      -->
 
 
 </RelativeLayout>
+
+
