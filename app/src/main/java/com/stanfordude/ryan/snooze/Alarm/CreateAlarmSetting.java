@@ -13,9 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -60,15 +63,16 @@ public class CreateAlarmSetting extends DialogFragment implements View.OnClickLi
     //private Button cancelButton, createButton, deleteButton;
     //View of the dialog layout that will be inflated
     private View main;
+    private AlertDialog alertDialog;
     private OnFragmentInteractionListener mListener;
 
     public CreateAlarmSetting() {
 
     }
 
-    /*
-    Below are a few of the Fragment lifecycle methods
-     */
+        /*
+        Below are a few of the Fragment lifecycle methods
+         */
 
     public void setArguments(Bundle bundle) {
         isEdit = bundle.getBoolean(ISEDIT_PARAM);
@@ -76,24 +80,28 @@ public class CreateAlarmSetting extends DialogFragment implements View.OnClickLi
 
     }
 
-
+    public AlarmSetting getAlarmSetting() {
+        return alarmSetting;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*
-        Not doing anything yet, because findViewById() doesn't work at this point in the lifecycle
-         */
+
+            /*
+            Not doing anything yet, because findViewById() doesn't work at this point in the lifecycle
+             */
+
 
     }
 
-
+/*
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         //    TODO: check if this is to edit a current alarmSetting and add the save button and delete button
 
 
-        main = inflater.inflate(R.layout.fragment_create_alarm_setting, null;
+        main = inflater.inflate(R.layout.fragment_create_alarm_setting, null);
         //Initialize views and their listeners
         timePicker = (TimePicker) main.findViewById(R.id.alarm_fragment_dialog_timepicker);
         numberPicker = (NumberPicker) main.findViewById(R.id.alarm_fragment_dialog_numberpicker);
@@ -106,55 +114,69 @@ public class CreateAlarmSetting extends DialogFragment implements View.OnClickLi
         numberPicker.setMaxValue(45);
         numberPicker.setMinValue(0);
         //create display based on given parameters
-  /*
-        if (isEdit) {
-         //   ViewGroup parent= (ViewGroup) main.findViewById(R.id.alarm_fragment_dialog_button_container);
-            deleteButton= (Button) main.findViewById(R.id.alarm_fragment_dialog_delete_button);
-            deleteButton.setText("Delete");
-            deleteButton.getLayoutParams().height= LinearLayout.LayoutParams.WRAP_CONTENT;
-            deleteButton.getLayoutParams().width= LinearLayout.LayoutParams.WRAP_CONTENT;
-            deleteButton.setOnClickListener(this);
-            createButton.setText("Save");
+      /*
+            if (isEdit) {
+             //   ViewGroup parent= (ViewGroup) main.findViewById(R.id.alarm_fragment_dialog_button_container);
+                deleteButton= (Button) main.findViewById(R.id.alarm_fragment_dialog_delete_button);
+                deleteButton.setText("Delete");
+                deleteButton.getLayoutParams().height= LinearLayout.LayoutParams.WRAP_CONTENT;
+                deleteButton.getLayoutParams().width= LinearLayout.LayoutParams.WRAP_CONTENT;
+                deleteButton.setOnClickListener(this);
+                createButton.setText("Save");
 
-//TODO: Set Display Settings to current alarm settings, includes having cancel, delete, save buttons
-            timePicker.setCurrentHour(alarmSetting.getHours());
-            timePicker.setCurrentMinute(alarmSetting.getMinutes());
-
-
-
-            //Replace create button with the save add the delete button
-            ViewGroup parent= (ViewGroup) main.findViewById(R.id.alarm_fragment_dialog_button_container);
-            ViewGroup v=(ViewGroup) edit.findViewById(R.id.miscellaneous_items_container);
-            //v.removeView(edit.findViewById(R.id.alarm_fragment_dialog_delete_button));
-            parent.addView(edit.findViewById(R.id.alarm_fragment_dialog_delete_button), 1);
-            //Replace create button with save button
-            parent = (ViewGroup) createButton.getParent();
-            int index = parent.indexOfChild(createButton);
-            parent.removeView(createButton);
-            parent.addView(parent.findViewById(R.id.alarm_fragment_dialog_save_button), index);
+    //TODO: Set Display Settings to current alarm settings, includes having cancel, delete, save buttons
+                timePicker.setCurrentHour(alarmSetting.getHours());
+                timePicker.setCurrentMinute(alarmSetting.getMinutes());
 
 
-        }*/
+
+                //Replace create button with the save add the delete button
+                ViewGroup parent= (ViewGroup) main.findViewById(R.id.alarm_fragment_dialog_button_container);
+                ViewGroup v=(ViewGroup) edit.findViewById(R.id.miscellaneous_items_container);
+                //v.removeView(edit.findViewById(R.id.alarm_fragment_dialog_delete_button));
+                parent.addView(edit.findViewById(R.id.alarm_fragment_dialog_delete_button), 1);
+                //Replace create button with save button
+                parent = (ViewGroup) createButton.getParent();
+                int index = parent.indexOfChild(createButton);
+                parent.removeView(createButton);
+                parent.addView(parent.findViewById(R.id.alarm_fragment_dialog_save_button), index);
+
+
+            }
 
         return main;
     }
-
+*/
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
+        super.onCreateDialog(savedInstanceState);
         if (main == null) {
             main = getActivity().getLayoutInflater().inflate(R.layout.fragment_create_alarm_setting, null);
         }
+        timePicker = (TimePicker) main.findViewById(R.id.alarm_fragment_dialog_timepicker);
+        numberPicker = (NumberPicker) main.findViewById(R.id.alarm_fragment_dialog_numberpicker);
+        timePicker.setOnTimeChangedListener(this);
+        numberPicker.setOnValueChangedListener(this);
+        numberPicker.setMaxValue(45);
+        numberPicker.setMinValue(1);
+        if(alarmSetting==null) {
+            alarmSetting=new AlarmSetting(timePicker.getCurrentHour(), timePicker.getCurrentMinute(), 1, false);
+        }
+
+        else {
+            timePicker.setCurrentHour(alarmSetting.getHours());
+            timePicker.setCurrentMinute(alarmSetting.getMinutes());
+
+        }
+
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Create a new Alarm Setting");
+        builder.setView(main);
         builder.setNegativeButton("Cancel", this);
         builder.setPositiveButton("Create", this);
-
-        builder.setView(main);
-
-        return builder.create();
-
+        builder.setTitle("Create a new Alarm Setting");
+        return (alertDialog=builder.show());
 
 
     }
@@ -191,13 +213,15 @@ public class CreateAlarmSetting extends DialogFragment implements View.OnClickLi
     public void onClick(DialogInterface dialogInterface, int id) {
         switch (id) {
             case DialogInterface.BUTTON_NEGATIVE:
-
-
+                this.dismiss();
+                        break;
             case DialogInterface.BUTTON_NEUTRAL:
 
 
             case DialogInterface.BUTTON_POSITIVE:
 
+
+                break;
         }
 
 
@@ -205,9 +229,9 @@ public class CreateAlarmSetting extends DialogFragment implements View.OnClickLi
 
 
     @Override
-    public void onValueChange(NumberPicker picker, int val, int num) {
+    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
         //Do something
-
+        alarmSetting.setSnoozeLength(newVal);
     }
 
     @Override
@@ -215,7 +239,8 @@ public class CreateAlarmSetting extends DialogFragment implements View.OnClickLi
         if (alarmSetting != null) {
             alarmSetting.setHours(hours);
             alarmSetting.setMinutes(minutes);
-        } else alarmSetting = new AlarmSetting(hours, minutes, false);
+        }
+        else alarmSetting = new AlarmSetting(hours, minutes, false);
 
 
     }

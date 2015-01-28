@@ -1,15 +1,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     tools:context="com.stanfordude.ryan.snooze.Alarm.CreateAlarmSetting"
-    android:id="@+id/fragment_create_alarm_setting">
+    android:id="@+id/fragment_create_alarm_setting"
+    android:background="@color/white"
+    >
 
     <!-- This layout is for the custom dialog used to create the new alarm settings
             when the "Add" button is pressed in the fragment_alarm layout -->
 
     <!-- Maybe put the items inside a listview for scrollability?-->
-
+    <!--
     <TextView
         android:id="@+id/alarm_fragment_dialog_title"
         android:layout_width="match_parent"
@@ -18,22 +20,35 @@
         android:layout_centerInParent="true"
         android:textSize="20dp"
         android:text="Create an Alarm Setting" />
+-->
+
 
 
     <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/alarm_fragment_dialog_title"
-        android:layout_above="@+id/alarm_fragment_dialog_cancel_button">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        >
+        <!--  android:layout_below="@id/alarm_fragment_dialog_title"  -->
         <!-- Used for setting alarm time-->
+        <TextView
+           android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Alarm Time"
+            />
         <TimePicker
             android:id="@+id/alarm_fragment_dialog_timepicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/alarm_fragment_dialog_title"
 
             />
         <!--Used for the length between snoozes-->
+
+        <TextView
+           android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Snooze Length in minutes"
+            />
         <NumberPicker
             android:id="@+id/alarm_fragment_dialog_numberpicker"
             android:layout_width="match_parent"
@@ -45,42 +60,12 @@
     </TableLayout>
 
 
-    <!--  <LinearLayout
-          android:id="@+id/alarm_fragment_dialog_button_container"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:layout_alignParentBottom="true"
-              >
-          <Button
-              android:id="@+id/alarm_fragment_dialog_cancel_button"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="Cancel"
-              android:layout_alignParentBottom="true"
-              android:layout_alignParentLeft="true"
-              android:layout_weight="1" />
-
-          <Button
-              android:id="@+id/alarm_fragment_dialog_delete_button"
-              android:layout_width="0dp"
-              android:layout_height="0dp"
-              android:layout_toRightOf="@id/alarm_fragment_dialog_cancel_button"
-              android:layout_weight="1"
-              />
-
-          <Button
-              android:id="@+id/alarm_fragment_dialog_create_button"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="Create"
-              android:layout_alignParentBottom="true"
-              android:layout_alignParentRight="true"
-              android:layout_weight="1" />
-
-      -->
-
-
 </RelativeLayout>
+
+
+
+
+
+
 
 

@@ -33,7 +33,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
 
     private ListView listView;
     private ArrayAdapter<String> arrayAdapter;
-    private ArrayList<AlarmSetting> alarmSettingList;
+    private ArrayList<AlarmSetting> alarmSettingList=new ArrayList<AlarmSetting>();
 
 
     // the fragment initialization parameters for the Bundle
@@ -50,8 +50,9 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.add_alarm_setting:
                 //add a fragment that will enable the user to specify the timer settings, the i.e, CreateAlarmSetting class
-                new CreateAlarmSetting().show(getFragmentManager().beginTransaction(), "tag-do something with");
-
+              CreateAlarmSetting fragment=new CreateAlarmSetting();
+                fragment.show(getFragmentManager().beginTransaction(), "tag-do something with");
+                alarmSettingList.add(fragment.getAlarmSetting());
                 break;
 
 
