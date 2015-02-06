@@ -1,4 +1,4 @@
-package com.stanfordude.ryan.snooze.Alarm;
+package com.stanfordude.ryan.snooze.Alarm.Foreground;
 
 /**
  * Created by ryan on 1/8/15.

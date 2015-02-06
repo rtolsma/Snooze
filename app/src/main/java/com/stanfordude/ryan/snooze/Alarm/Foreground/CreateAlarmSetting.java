@@ -1,4 +1,4 @@
-package com.stanfordude.ryan.snooze.Alarm;
+package com.stanfordude.ryan.snooze.Alarm.Foreground;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -8,25 +8,14 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Layout;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.NumberPicker;
-import android.widget.RelativeLayout;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.stanfordude.ryan.snooze.MainActivity;
 import com.stanfordude.ryan.snooze.R;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 /**

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.stanfordude.ryan.snooze.Alarm.AlarmFragment"
+    tools:context="com.stanfordude.ryan.snooze.Alarm.Foreground.AlarmFragment"
     android:background="@color/white">
 
     <!-- This will have a listview that contains the alarm time data and displays it -->

@@ -1,4 +1,4 @@
-package com.stanfordude.ryan.snooze.Alarm;
+package com.stanfordude.ryan.snooze.Alarm.Foreground;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.stanfordude.ryan.snooze.Alarm.Foreground.AlarmSetting;
 import com.stanfordude.ryan.snooze.R;
 
 import java.util.ArrayList;

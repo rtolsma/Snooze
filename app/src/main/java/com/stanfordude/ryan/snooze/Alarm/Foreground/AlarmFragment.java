@@ -1,4 +1,4 @@
-package com.stanfordude.ryan.snooze.Alarm;
+package com.stanfordude.ryan.snooze.Alarm.Foreground;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,11 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.stanfordude.ryan.snooze.R;
@@ -43,7 +41,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener, Ada
     public SharedPreferences sp;
 
 
-    public final static String TAG = "AlarmFragment";
+    public static final String TAG = "AlarmFragment";
     private ListView listView;
     private AlarmSettingAdapter alarmAdapter;
 

@@ -8,18 +8,21 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.stanfordude.ryan.snooze.Alarm.AlarmFragment;
-import com.stanfordude.ryan.snooze.Alarm.CreateAlarmSetting;
+import com.stanfordude.ryan.snooze.Alarm.Foreground.AlarmFragment;
+import com.stanfordude.ryan.snooze.Alarm.Foreground.CreateAlarmSetting;
 
-import java.net.URI;
+/*
+I was a little lazy in terms of placing certain methods and constants in the correct
+or preferable places, so there are often constants that should be universal but are accessed through
+specific classes
 
+
+
+ */
 
 public class MainActivity extends ActionBarActivity implements AlarmFragment.OnFragmentInteractionListener, CreateAlarmSetting.OnFragmentInteractionListener {
 
@@ -37,29 +40,55 @@ public class MainActivity extends ActionBarActivity implements AlarmFragment.OnF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (savedInstanceState == null) {
+        SharedPreferences pref = getSharedPreferences(AlarmFragment.FILE, Context.MODE_PRIVATE);
+        String temp;
+        if (savedInstanceState != null) {
+            String result = savedInstanceState.getString(AlarmFragment.LASTUSED);
+            switch (result) {
 
-        }
-          /*  SharedPreferences pref=getSharedPreferences(AlarmFragment.FILE, Context.MODE_PRIVATE);
-        switch(pref.getString(AlarmFragment.LASTUSED, ""))  {
-            case AlarmFragment.TAG: displayAlarmFragment(null);
+                case AlarmFragment.TAG:
+                    displayAlarmFragment(null);
+                    break;
 
-            default: break;
+                default:
+                    break;
+            }
+        } else if ((temp = pref.getString(AlarmFragment.LASTUSED, "")) != "") {
+            switch (temp) {
+                case AlarmFragment.TAG:
+                    displayAlarmFragment(null);
+                    break;
+                default:
+                    break;
 
-        }  */
 
+            }
+
+        } else
+            displayAlarmFragment(null);
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+   /*    //Gets tag of last fragment in the backStack
+        if(savedInstanceState==null) savedInstanceState=new Bundle();
+
+         savedInstanceState.putString(AlarmFragment.LASTUSED,
+          fragmentManager.findFragmentById(fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-1).getId()).getTag());
+       savedInstanceState.putString("Key", "Test");
+        super.onSaveInstanceState(savedInstanceState); */
+    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-     /*   SharedPreferences pref=getSharedPreferences(AlarmFragment.FILE, Context.MODE_PRIVATE);
+
+        SharedPreferences pref = getSharedPreferences(AlarmFragment.FILE, Context.MODE_PRIVATE);
         SharedPreferences.Editor edit=pref.edit();
         Fragment temp=fragmentManager.findFragmentById(fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-1).getId());
         edit.putString(AlarmFragment.LASTUSED, temp.getTag());
-        edit.commit();  */
+        edit.commit();
     }
 
 
