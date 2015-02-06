@@ -8,10 +8,9 @@
     <!-- This will have a listview that contains the alarm time data and displays it -->
 
     <LinearLayout
-        android:id="@+id/alarm_list_container"
+        android:id="@+id/alarm_fragment_list_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black"
         android:layout_below="@+id/add_alarm_setting">
         android:layout_below="@+id/add_alarm_setting">
 
@@ -24,7 +23,7 @@
             />
     </LinearLayout>
 
-
+    <!-- Replace with picture of an add button like apple. In the action bar????-->
     <Button
         android:id="@+id/add_alarm_setting"
         android:layout_height="wrap_content"

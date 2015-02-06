@@ -7,10 +7,12 @@ The action bar or a button will be used to create new values
 
     The alarm times are displayed using a ListView
 
-
+Will contain a fragment for personal alarms, and a fragment for wakeup notifications to others.
+       This fragment will be able to text a group of people a custom message at the scheduled time,
+       and will be able to call them at the scheduled time with a custom recording.
 
 
 
   Questions:
 
-  How do you programatically use a UI outline, and display it multiple times with different inner values? i.e: like object instantiation
+How to do the background process of getting alarms to beat

@@ -1,7 +1,10 @@
 package com.stanfordude.ryan.snooze;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -37,8 +40,26 @@ public class MainActivity extends ActionBarActivity implements AlarmFragment.OnF
         if (savedInstanceState == null) {
 
         }
+          /*  SharedPreferences pref=getSharedPreferences(AlarmFragment.FILE, Context.MODE_PRIVATE);
+        switch(pref.getString(AlarmFragment.LASTUSED, ""))  {
+            case AlarmFragment.TAG: displayAlarmFragment(null);
+
+            default: break;
+
+        }  */
 
 
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+     /*   SharedPreferences pref=getSharedPreferences(AlarmFragment.FILE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit=pref.edit();
+        Fragment temp=fragmentManager.findFragmentById(fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-1).getId());
+        edit.putString(AlarmFragment.LASTUSED, temp.getTag());
+        edit.commit();  */
     }
 
 
@@ -63,7 +84,14 @@ public class MainActivity extends ActionBarActivity implements AlarmFragment.OnF
 
         return super.onOptionsItemSelected(item);
     }
+                    /*
+                    Helper methods
+             */
 
+
+    public AlarmFragment getAlarmFragment() {
+        return alarmFragment;
+    }
 
         /*
         Methods for displaying fragments
@@ -73,8 +101,8 @@ public class MainActivity extends ActionBarActivity implements AlarmFragment.OnF
     public void displayAlarmFragment(View v) {
         if (alarmFragment != null && alarmFragment.isVisible()) return;
         alarmFragment = new AlarmFragment();
-        fragmentTransaction.replace(R.id.fragment_container, alarmFragment);
-        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace(R.id.fragment_container, alarmFragment, AlarmFragment.TAG);
+        fragmentTransaction.addToBackStack(AlarmFragment.TAG);
         fragmentTransaction.commit();
 
 

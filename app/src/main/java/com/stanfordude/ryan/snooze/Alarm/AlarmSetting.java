@@ -2,15 +2,15 @@ package com.stanfordude.ryan.snooze.Alarm;
 
 /**
  * Created by ryan on 1/8/15.
- * <p/>
+ *
  * The snoozeLength will be determined in minutes
- * <p/>
+ *
  * The ringer/alert will be set by the ui and stored in the main_activity
- * <p/>
- * <p/>
+ *
  * This is just a class used to display all of the settings for a certain alarm
+ * and parse the data into a string
  */
-public class AlarmSetting {
+public class AlarmSetting implements Comparable<AlarmSetting> {
 
     public int hours;
 
@@ -36,11 +36,33 @@ public class AlarmSetting {
 
     }
 
+    public int compareTo(AlarmSetting a) {
+        if (a.hours * 24 + a.minutes > this.hours * 24 + this.minutes) return -1;
+        if (a.hours * 24 + a.minutes > this.hours * 24 + this.minutes) return 0;
+        else return 1;
+    }
+
+    public String getState() {
+        if (hours > 11)
+            return "P.M";
+        else
+            return "A.M";
+    }
+
+    public String getTime() {
+        if (minutes >= 10)
+            return hours > 12 ? hours - 12 + ":" + minutes : hours + ":" + minutes;
+        else return hours > 12 ? hours - 12 + ":0" + minutes : hours + ":0" + minutes;
+
+    }
+
     @Override
     public String toString() {
 
-
+        if (minutes >= 10)
         return hours > 12 ? hours - 12 + ":" + minutes + " P.M" : hours + ":" + minutes + "A.M";
+        else
+            return hours > 12 ? hours - 12 + ":0" + minutes + " P.M" : hours + ":0" + minutes + "A.M";
 
     }
 

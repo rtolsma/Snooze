@@ -4,8 +4,7 @@
     android:layout_height="wrap_content"
     tools:context="com.stanfordude.ryan.snooze.Alarm.CreateAlarmSetting"
     android:id="@+id/fragment_create_alarm_setting"
-    android:background="@color/white"
-    >
+    android:background="@color/white">
 
     <!-- This layout is for the custom dialog used to create the new alarm settings
             when the "Add" button is pressed in the fragment_alarm layout -->
@@ -23,19 +22,19 @@
 -->
 
 
-
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        >
+        android:layout_centerInParent="true">
         <!--  android:layout_below="@id/alarm_fragment_dialog_title"  -->
         <!-- Used for setting alarm time-->
         <TextView
-           android:layout_height="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:text="Alarm Time"
-            />
+            android:textStyle="bold" />
+
         <TimePicker
             android:id="@+id/alarm_fragment_dialog_timepicker"
             android:layout_width="match_parent"
@@ -45,10 +44,12 @@
         <!--Used for the length between snoozes-->
 
         <TextView
-           android:layout_width="wrap_content"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:text="Snooze Length in minutes"
-            />
+            android:textStyle="bold" />
+
         <NumberPicker
             android:id="@+id/alarm_fragment_dialog_numberpicker"
             android:layout_width="match_parent"
