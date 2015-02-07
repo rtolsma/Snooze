@@ -1,5 +1,6 @@
 package com.stanfordude.ryan.snooze;
 
+import android.app.AlarmManager;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -15,6 +16,8 @@ import android.view.View;
 import com.stanfordude.ryan.snooze.Alarm.Foreground.AlarmFragment;
 import com.stanfordude.ryan.snooze.Alarm.Foreground.CreateAlarmSetting;
 
+import java.util.ArrayList;
+
 /*
 I was a little lazy in terms of placing certain methods and constants in the correct
 or preferable places, so there are often constants that should be universal but are accessed through
@@ -29,7 +32,7 @@ public class MainActivity extends ActionBarActivity implements AlarmFragment.OnF
 
     FragmentManager fragmentManager = getFragmentManager();
     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-    AlarmFragment alarmFragment;
+    AlarmFragment alarmFragment = new AlarmFragment();
 
 
 
@@ -40,6 +43,7 @@ public class MainActivity extends ActionBarActivity implements AlarmFragment.OnF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //View setup stuff
         SharedPreferences pref = getSharedPreferences(AlarmFragment.FILE, Context.MODE_PRIVATE);
         String temp;
         if (savedInstanceState != null) {
@@ -64,8 +68,14 @@ public class MainActivity extends ActionBarActivity implements AlarmFragment.OnF
 
             }
 
-        } else
+        } else {
             displayAlarmFragment(null);
+        }
+
+
+
+
+
 
     }
 
@@ -129,7 +139,8 @@ public class MainActivity extends ActionBarActivity implements AlarmFragment.OnF
 
     public void displayAlarmFragment(View v) {
         if (alarmFragment != null && alarmFragment.isVisible()) return;
-        alarmFragment = new AlarmFragment();
+
+        if (alarmFragment == null) alarmFragment = new AlarmFragment();
         fragmentTransaction.replace(R.id.fragment_container, alarmFragment, AlarmFragment.TAG);
         fragmentTransaction.addToBackStack(AlarmFragment.TAG);
         fragmentTransaction.commit();

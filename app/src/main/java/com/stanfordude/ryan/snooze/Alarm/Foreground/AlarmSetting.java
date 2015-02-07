@@ -1,5 +1,14 @@
 package com.stanfordude.ryan.snooze.Alarm.Foreground;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+
+import com.stanfordude.ryan.snooze.Alarm.Background.BeepReceiver;
+
+import java.util.Calendar;
+
 /**
  * Created by ryan on 1/8/15.
  *
@@ -35,6 +44,31 @@ public class AlarmSetting implements Comparable<AlarmSetting> {
         this.setOn = setOn;
 
     }
+
+    //Not sure how this pendingIntent will work out, may not be unique which could
+    //cause alarm cancellation errors.
+    public void setAlarm(Context ctx, AlarmManager am) {
+        Intent intent = new Intent(ctx, BeepReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(ctx, 0, intent, 0);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hours);
+        calendar.set(Calendar.MINUTE, minutes);
+        long time = calendar.getTimeInMillis();
+        long offset = 24 * 60 * 60 * 1000; //time in milliseconds for one day
+        if (am == null) am = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, time, offset, pendingIntent);
+    }
+
+
+
+
+
+
+
+    /*
+    Basic methods
+     */
+
 
     public int compareTo(AlarmSetting a) {
         if (a.hours * 24 + a.minutes > this.hours * 24 + this.minutes) return -1;

@@ -13,6 +13,13 @@ Will contain a fragment for personal alarms, and a fragment for wakeup notificat
 
 
 
+TODO:In the alarm fragment, must schedule Alarms using alarmManager when saving and creating AlarmSettings,
+also, the previous alarms must be cancelled when editing a setting, and alarms must be deleted
+when AlarmSettings are deleted.
+
+
+
+
   Questions:
 
 How to do the background process of getting alarms to beat
