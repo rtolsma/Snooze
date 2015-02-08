@@ -4,6 +4,8 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.stanfordude.ryan.snooze.Alarm.Background.BeepReceiver;
 
@@ -28,39 +30,65 @@ public class AlarmSetting implements Comparable<AlarmSetting> {
     public int snoozeLength;
     public boolean setOn;
 
+    PendingIntent pendingIntent;
+    Intent intent;
+    AlarmManager am;
+    Context ctx;
     /*
     Hours will be in the same format of 0-23 as the timepicker is
      */
-    public AlarmSetting(int hours, int minutes, int snoozeLength, boolean setOn) {
+    public AlarmSetting(int hours, int minutes, int snoozeLength, boolean setOn, Context ctx, AlarmManager am) {
         this.hours = hours;
         this.minutes = minutes;
         this.snoozeLength = snoozeLength;
         this.setOn = setOn;
+        this.ctx=ctx;
+        this.am=am;
     }
-
-    public AlarmSetting(int hours, int minutes, boolean setOn) {
+    public AlarmSetting(int hours, int minutes, int snoozeLength, boolean setOn, Context ctx) {
         this.hours = hours;
         this.minutes = minutes;
+        this.snoozeLength = snoozeLength;
         this.setOn = setOn;
-
+        this.ctx=ctx;
+        this.am=(AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
     }
+
+
+
 
     //Not sure how this pendingIntent will work out, may not be unique which could
     //cause alarm cancellation errors.
-    public void setAlarm(Context ctx, AlarmManager am) {
-        Intent intent = new Intent(ctx, BeepReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(ctx, 0, intent, 0);
+    public void setAlarm() {
+      //When editing values of the AlarmSetting, the previous alarm must be canceled, and a new one
+        //must be made
+        if(pendingIntent!=null || isAlarmSet()==true) cancelAlarm();
+
+
+        intent = new Intent(ctx, BeepReceiver.class);
+        intent.setAction(this.toString());
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, hours);
         calendar.set(Calendar.MINUTE, minutes);
+        pendingIntent = PendingIntent.getBroadcast(ctx,0 , intent, 0);
         long time = calendar.getTimeInMillis();
         long offset = 24 * 60 * 60 * 1000; //time in milliseconds for one day
         if (am == null) am = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
         am.setRepeating(AlarmManager.RTC_WAKEUP, time, offset, pendingIntent);
+
     }
 
+    public void cancelAlarm() {
+        if(am==null || pendingIntent==null) return;
+        am.cancel(pendingIntent);
 
+    }
 
+    public boolean isAlarmSet() {
+         boolean enabled= (PendingIntent.getBroadcast(ctx, 0, intent, PendingIntent.FLAG_NO_CREATE)!=null);
+        return enabled;
+
+    }
 
 
 
@@ -84,9 +112,16 @@ public class AlarmSetting implements Comparable<AlarmSetting> {
     }
 
     public String getTime() {
-        if (minutes >= 10)
+        if (minutes >= 10) {
+          if(hours==0) return hours+12+":"+minutes;
+
             return hours > 12 ? hours - 12 + ":" + minutes : hours + ":" + minutes;
-        else return hours > 12 ? hours - 12 + ":0" + minutes : hours + ":0" + minutes;
+
+        }
+        else {
+            if(hours==0)  return hours+12+":0" + minutes;
+            return hours > 12 ? hours - 12 + ":0" + minutes : hours + ":0" + minutes;
+        }
 
     }
 
@@ -134,7 +169,9 @@ public class AlarmSetting implements Comparable<AlarmSetting> {
     }
 
     public void setSetOn(boolean setOn) {
+
         this.setOn = setOn;
+
     }
 
 }

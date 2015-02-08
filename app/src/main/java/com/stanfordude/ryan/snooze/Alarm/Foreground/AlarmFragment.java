@@ -1,6 +1,7 @@
 package com.stanfordude.ryan.snooze.Alarm.Foreground;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -34,6 +35,9 @@ import java.util.Collections;
 
 
 public class AlarmFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
+
+
+
 
     //SharedPreference Keys
     public final static String SNOOZELENGTH = "SNOOZELENGTH", MINUTES = "Minutes", HOURS = "HOURS",
@@ -75,6 +79,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener, Ada
             //doesn't work, needs to load from sharedPreferences
             listView = (ListView) savedInstanceState.get(LIST_VIEW);
         }
+
 
 
     }
@@ -122,8 +127,8 @@ public class AlarmFragment extends Fragment implements View.OnClickListener, Ada
 
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onPause() {
+        super.onPause();
         if (alarmSettingList == null) return;
 
         for (int i = 0; i < alarmSettingList.size(); i++) {
@@ -166,7 +171,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener, Ada
             hours = sp.getInt(HOURS + i, 0);
             snooze = sp.getInt(SNOOZELENGTH + i, 0);
             state = sp.getBoolean(STATE + i, false);
-            temp = new AlarmSetting(hours, min, snooze, state);
+            temp = new AlarmSetting(hours, min, snooze, state, getActivity());
             alarmSettingList.add(temp);
         }
 

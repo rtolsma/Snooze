@@ -50,7 +50,15 @@ public class AlarmSettingAdapter extends ArrayAdapter<AlarmSetting> {
             @Override
             public void onClick(View v) {
                 int position = (int) v.getTag();
+ //               if(((ToggleButton)v).isChecked()!=alarmSettingList.get(position).isSetOn())
+                    if(((ToggleButton)v).isChecked()) alarmSettingList.get(position).setAlarm();
+                    else  alarmSettingList.get(position).cancelAlarm();
+
+
                 alarmSettingList.get(position).setSetOn(((ToggleButton) v).isChecked());
+             //   boolean onOrOff= ((ToggleButton)v).isChecked();
+               // if(onOrOff) alarmSettingList.get(position).setAlarm();
+
             }
         });
         temp.setSetOn(on.isChecked());

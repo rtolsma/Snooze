@@ -1,10 +1,12 @@
 package com.stanfordude.ryan.snooze.Alarm.Foreground;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -45,6 +47,10 @@ public class CreateAlarmSetting extends DialogFragment implements View.OnClickLi
 
     private MainActivity ma;
     private AlarmFragment af;
+
+
+    //AlarmService stuff
+    public AlarmManager alarmManager;
     /*
     the isEdit variable is set to true when an existing alarm time is clicked, this will add the
     "delete" button to the dialog, to possibly delete the item from the listview
@@ -94,15 +100,19 @@ public class CreateAlarmSetting extends DialogFragment implements View.OnClickLi
             Not doing anything yet, because findViewById() doesn't work at this point in the lifecycle
              */
 
-
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
+
+
+
+
         ma = (MainActivity) getActivity();
         af = ma.getAlarmFragment();
-
+        alarmManager= (AlarmManager) ma.getSystemService(Context.ALARM_SERVICE);
+        //Dialog initialization stuff below
 
         if (main == null) {
             main = getActivity().getLayoutInflater().inflate(R.layout.fragment_create_alarm_setting, null);
@@ -119,7 +129,7 @@ public class CreateAlarmSetting extends DialogFragment implements View.OnClickLi
         if (!isEdit) {
             timePicker.setCurrentHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
             timePicker.setCurrentMinute(Calendar.getInstance().get(Calendar.MINUTE));
-            alarmSetting = new AlarmSetting(timePicker.getCurrentHour(), timePicker.getCurrentMinute(), 1, false);
+            alarmSetting = new AlarmSetting(timePicker.getCurrentHour(), timePicker.getCurrentMinute(), 1, false, getActivity() , alarmManager );
 
 
             builder.setView(main);
@@ -182,12 +192,18 @@ public class CreateAlarmSetting extends DialogFragment implements View.OnClickLi
                 if (isEdit) {
                     af.getAlarmSettingList().remove(settingIndex);
                     ((BaseAdapter) af.getListView().getAdapter()).notifyDataSetChanged();
+
+                    //Will cancel any alarm with a matching pendingIntent in this AlarmSetting
+                    //because its being deleted
+                    af.getAlarmSettingList().get(settingIndex).cancelAlarm();
+
                 }
                 break;
             case DialogInterface.BUTTON_NEUTRAL:
 
 
             case DialogInterface.BUTTON_POSITIVE:
+                //get data from pickers, add alarm to listview
                 alarmSetting.minutes = timePicker.getCurrentMinute();
                 alarmSetting.hours = timePicker.getCurrentHour();
                 alarmSetting.snoozeLength = numberPicker.getValue();

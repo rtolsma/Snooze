@@ -18,6 +18,9 @@ also, the previous alarms must be cancelled when editing a setting, and alarms m
 when AlarmSettings are deleted.
 
 
+Problems: Get the alarms to cancel and be set with the toggleButton checked state:
+Using the array Adapter to provide this functionality
+
 
 
   Questions:

@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -13,19 +14,13 @@ import java.util.ArrayList;
  */
 public class BeepReceiver extends BroadcastReceiver {
     //Time Based Code Execution stuff
-    public AlarmManager alarmManager;
-    public ArrayList<AlarmManager.AlarmClockInfo> alarmClocks = new ArrayList<>();
 
 
     @Override
     public void onReceive(Context ctx, Intent intent) {
-        setAlarms(ctx);
+        Toast.makeText(ctx, "ReceivedIntent", Toast.LENGTH_LONG).show();
     }
 
-
-    public void setAlarms(Context ctc) {
-
-    }
 
 
 }
