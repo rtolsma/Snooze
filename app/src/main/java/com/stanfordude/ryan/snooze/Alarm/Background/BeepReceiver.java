@@ -19,7 +19,7 @@ public class BeepReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context ctx, Intent intent) {
-        Toast.makeText(ctx, "Hello", Toast.LENGTH_LONG).show();
+        Toast.makeText(ctx, "Broadcast Received from alarm scheduled for " + intent.getAction(), Toast.LENGTH_LONG).show();
         Log.d("Tag", "Received stuff");
     }
 

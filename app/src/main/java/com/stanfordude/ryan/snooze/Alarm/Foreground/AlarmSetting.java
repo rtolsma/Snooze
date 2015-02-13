@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.stanfordude.ryan.snooze.Alarm.Background.BeepReceiver;
+import com.stanfordude.ryan.snooze.MainActivity;
 
 import java.util.Calendar;
 
@@ -49,7 +50,6 @@ public class AlarmSetting implements Comparable<AlarmSetting> {
         intent = new Intent(ctx, BeepReceiver.class);
         intent.setAction(this.toString());
         pendingIntent = PendingIntent.getBroadcast(ctx, 0, intent, 0);
-
     }
     public AlarmSetting(int hours, int minutes, int snoozeLength, boolean setOn, Context ctx) {
         this.hours = hours;
@@ -77,24 +77,24 @@ public class AlarmSetting implements Comparable<AlarmSetting> {
         boolean temp;
         if (pendingIntent != null && (temp = isAlarmSet())) cancelAlarm();
 
-     /*   if(intent==null) {
+
+        if (intent == null) {
             intent = new Intent(ctx, BeepReceiver.class);
             intent.setAction(this.toString());
         }
-        if(pendingIntent==null) pendingIntent = PendingIntent.getBroadcast(ctx,0 , intent, 0);
-*/
+        if (pendingIntent == null) pendingIntent = PendingIntent.getBroadcast(ctx, 0, intent, 0);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, hours);
         calendar.set(Calendar.MINUTE, minutes);
         long offset = 24 * 60 * 60 * 1000;
-        long time = System.currentTimeMillis();
-        long difference = (hours - calendar.get(Calendar.HOUR_OF_DAY) * 60 * 1000) + (minutes - calendar.get(Calendar.MINUTE) * 1000);
-        if (am == null) am = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), offset, pendingIntent);
 
-        Toast.makeText(ctx, "Alarm is set", Toast.LENGTH_LONG).show();
+        long time = calendar.getTimeInMillis();
+        if (am == null) am = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, time, offset, pendingIntent);
+
+        Toast.makeText(ctx, "Alarm is set at: " + toString(), Toast.LENGTH_LONG).show();
     }
 
     public void cancelAlarm() {

@@ -12,6 +12,10 @@ public class BeepIntentService extends IntentService {
            super(s);
        }
 
+    public BeepIntentService() {
+        super("BeepIntentService");
+    }
+
     @Override
     public void onHandleIntent(Intent intent) {
 
