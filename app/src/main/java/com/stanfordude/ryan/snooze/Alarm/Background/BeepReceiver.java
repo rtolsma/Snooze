@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -18,7 +19,8 @@ public class BeepReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context ctx, Intent intent) {
-        Toast.makeText(ctx, "ReceivedIntent", Toast.LENGTH_LONG).show();
+        Toast.makeText(ctx, "Hello", Toast.LENGTH_LONG).show();
+        Log.d("Tag", "Received stuff");
     }
 
 

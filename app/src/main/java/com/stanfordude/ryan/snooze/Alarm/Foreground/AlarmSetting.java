@@ -44,6 +44,12 @@ public class AlarmSetting implements Comparable<AlarmSetting> {
         this.setOn = setOn;
         this.ctx=ctx;
         this.am=am;
+
+
+        intent = new Intent(ctx, BeepReceiver.class);
+        intent.setAction(this.toString());
+        pendingIntent = PendingIntent.getBroadcast(ctx, 0, intent, 0);
+
     }
     public AlarmSetting(int hours, int minutes, int snoozeLength, boolean setOn, Context ctx) {
         this.hours = hours;
@@ -52,6 +58,12 @@ public class AlarmSetting implements Comparable<AlarmSetting> {
         this.setOn = setOn;
         this.ctx=ctx;
         this.am=(AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
+
+
+        intent = new Intent(ctx, BeepReceiver.class);
+        intent.setAction(this.toString());
+        pendingIntent = PendingIntent.getBroadcast(ctx, 0, intent, 0);
+
     }
 
 
@@ -62,20 +74,27 @@ public class AlarmSetting implements Comparable<AlarmSetting> {
     public void setAlarm() {
       //When editing values of the AlarmSetting, the previous alarm must be canceled, and a new one
         //must be made
-        if(pendingIntent!=null || isAlarmSet()==true) cancelAlarm();
+        boolean temp;
+        if (pendingIntent != null && (temp = isAlarmSet())) cancelAlarm();
 
+     /*   if(intent==null) {
+            intent = new Intent(ctx, BeepReceiver.class);
+            intent.setAction(this.toString());
+        }
+        if(pendingIntent==null) pendingIntent = PendingIntent.getBroadcast(ctx,0 , intent, 0);
+*/
 
-        intent = new Intent(ctx, BeepReceiver.class);
-        intent.setAction(this.toString());
         Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, hours);
         calendar.set(Calendar.MINUTE, minutes);
-        pendingIntent = PendingIntent.getBroadcast(ctx,0 , intent, 0);
-        long time = calendar.getTimeInMillis();
-        long offset = 24 * 60 * 60 * 1000; //time in milliseconds for one day
+        long offset = 24 * 60 * 60 * 1000;
+        long time = System.currentTimeMillis();
+        long difference = (hours - calendar.get(Calendar.HOUR_OF_DAY) * 60 * 1000) + (minutes - calendar.get(Calendar.MINUTE) * 1000);
         if (am == null) am = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, time, offset, pendingIntent);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), offset, pendingIntent);
 
+        Toast.makeText(ctx, "Alarm is set", Toast.LENGTH_LONG).show();
     }
 
     public void cancelAlarm() {
@@ -85,7 +104,9 @@ public class AlarmSetting implements Comparable<AlarmSetting> {
     }
 
     public boolean isAlarmSet() {
-         boolean enabled= (PendingIntent.getBroadcast(ctx, 0, intent, PendingIntent.FLAG_NO_CREATE)!=null);
+        if (intent == null) return false;
+        boolean enabled = (PendingIntent.getBroadcast(ctx, 0, intent, PendingIntent.FLAG_NO_CREATE) != null);
+
         return enabled;
 
     }

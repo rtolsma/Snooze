@@ -190,17 +190,16 @@ public class CreateAlarmSetting extends DialogFragment implements View.OnClickLi
         switch (id) {
             case DialogInterface.BUTTON_NEGATIVE:
                 if (isEdit) {
+                    //remove the alarm, and from the list
+                    af.getAlarmSettingList().get(settingIndex).cancelAlarm();
                     af.getAlarmSettingList().remove(settingIndex);
                     ((BaseAdapter) af.getListView().getAdapter()).notifyDataSetChanged();
 
                     //Will cancel any alarm with a matching pendingIntent in this AlarmSetting
                     //because its being deleted
-                    af.getAlarmSettingList().get(settingIndex).cancelAlarm();
 
                 }
                 break;
-            case DialogInterface.BUTTON_NEUTRAL:
-
 
             case DialogInterface.BUTTON_POSITIVE:
                 //get data from pickers, add alarm to listview
@@ -208,8 +207,10 @@ public class CreateAlarmSetting extends DialogFragment implements View.OnClickLi
                 alarmSetting.hours = timePicker.getCurrentHour();
                 alarmSetting.snoozeLength = numberPicker.getValue();
                 if (isEdit)
-                    af.getAlarmSettingList().remove(settingIndex);
-                af.addAlarmSetting(alarmSetting);
+                    alarmSetting.setAlarm();
+                else af.getAlarmSettingList().add(alarmSetting);
+
+                ((BaseAdapter) af.getListView().getAdapter()).notifyDataSetChanged();
 
                 break;
         }
