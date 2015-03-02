@@ -19,6 +19,7 @@ import com.stanfordude.ryan.snooze.MainActivity;
 import com.stanfordude.ryan.snooze.R;
 
 import java.util.Calendar;
+import java.util.Collections;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -206,9 +207,11 @@ public class CreateAlarmSetting extends DialogFragment implements View.OnClickLi
                 alarmSetting.minutes = timePicker.getCurrentMinute();
                 alarmSetting.hours = timePicker.getCurrentHour();
                 alarmSetting.snoozeLength = numberPicker.getValue();
-                if (isEdit)
-                    alarmSetting.setAlarm();
-                else af.getAlarmSettingList().add(alarmSetting);
+                if (isEdit) {
+                   if(alarmSetting.isSetOn()) alarmSetting.setAlarm();
+                    Collections.sort(af.getAlarmSettingList());
+                }
+                else af.addAlarmSetting(alarmSetting);
 
                 ((BaseAdapter) af.getListView().getAdapter()).notifyDataSetChanged();
 

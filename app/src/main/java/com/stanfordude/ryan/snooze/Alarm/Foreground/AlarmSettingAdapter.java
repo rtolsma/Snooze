@@ -45,6 +45,7 @@ public class AlarmSettingAdapter extends ArrayAdapter<AlarmSetting> {
         state.setText(temp.getState());
         //if(convertView!=null)
         on.setChecked(temp.isSetOn());
+        temp.setSetOn(on.isChecked());
         on.setTag(position);
         on.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +62,6 @@ public class AlarmSettingAdapter extends ArrayAdapter<AlarmSetting> {
 
             }
         });
-        temp.setSetOn(on.isChecked());
 
 
         //System.out.println("\n\n\n\n "+time+" "+temp+" "+state+" "+ listItem+" ");

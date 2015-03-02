@@ -26,3 +26,34 @@ Using the array Adapter to provide this functionality
   Questions:
 
 How to do the background process of getting alarms to beat
+
+
+
+Plan for Notification Paradigm for user alarms:
+
+    I want it to be something simple on the lock screen that will happen when the RTC_WAKEUP call is triggered.
+    Courtesy to @awendland I will be using a notification based model that includes buttons for stop
+    and snooze on it.
+
+    AlarmManager will trigger the BeepReceiver, the BeepReceiver will create a notification with the actions directed towards the intent service
+     and then will feed the intent service with an intent that states that it should start ringing. Intents received from the notification
+     actions will be dealt with accordingly (messy put extras stuff) . If it is to snooze, then the intent service will create a
+      new Alarmsetting and set its alarm minutes+snoozeLength minutes later. This will retrigger the notification to fire, but
+      will keep the same snoozelength present. If the stop button is pressed, then the intent service will be notified and will concurrently
+      stop ringing.
+
+     Note: with the Notification manager it is important to save the id for the notification in the intent extras, so that once the intent
+     service receives it, it can cancel the notification.
+     Note: for each action in the notification I will need a separate PendingIntent to make it unique
+    TODO figure out how snoozing will work, maybe an intent extra value?
+
+
+
+
+
+
+
+
+
+
+

@@ -30,7 +30,7 @@ public class AlarmSetting implements Comparable<AlarmSetting> {
     public int minutes;
     public int snoozeLength;
     public boolean setOn;
-
+    boolean alarmCallSet=false;
     PendingIntent pendingIntent;
     Intent intent;
     AlarmManager am;
@@ -48,7 +48,8 @@ public class AlarmSetting implements Comparable<AlarmSetting> {
 
 
         intent = new Intent(ctx, BeepReceiver.class);
-        intent.setAction(this.toString());
+        intent.setAction("Alarm set at: "+this.toString());
+        intent.putExtra("snooze", snoozeLength);
         pendingIntent = PendingIntent.getBroadcast(ctx, 0, intent, 0);
     }
     public AlarmSetting(int hours, int minutes, int snoozeLength, boolean setOn, Context ctx) {
@@ -61,7 +62,9 @@ public class AlarmSetting implements Comparable<AlarmSetting> {
 
 
         intent = new Intent(ctx, BeepReceiver.class);
-        intent.setAction(this.toString());
+        intent.setAction("Alarm set at "+this.toString());
+        intent.putExtra("snooze", snoozeLength);
+
         pendingIntent = PendingIntent.getBroadcast(ctx, 0, intent, 0);
 
     }
@@ -75,32 +78,37 @@ public class AlarmSetting implements Comparable<AlarmSetting> {
       //When editing values of the AlarmSetting, the previous alarm must be canceled, and a new one
         //must be made
         boolean temp;
-        if (pendingIntent != null && (temp = isAlarmSet())) cancelAlarm();
-
+                //isAlarmSet is currently returning true for everthing somehow
+     //   if (pendingIntent != null && (temp = isAlarmSet())) cancelAlarm();
+            cancelAlarm();
 
         if (intent == null) {
             intent = new Intent(ctx, BeepReceiver.class);
-            intent.setAction(this.toString());
         }
+        //set new action to create a unique intent for this setting
+        intent.setAction("Alarm set at "+this.toString());
+        intent.putExtra("snooze", snoozeLength);
         if (pendingIntent == null) pendingIntent = PendingIntent.getBroadcast(ctx, 0, intent, 0);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, hours);
         calendar.set(Calendar.MINUTE, minutes);
+        //solved problem if user set a time that had already occurred today from having the receiver being instantly notified
+        if((temp=(calendar.getTimeInMillis()<System.currentTimeMillis()))) calendar.add(Calendar.DATE,1);
         long offset = 24 * 60 * 60 * 1000;
 
         long time = calendar.getTimeInMillis();
         if (am == null) am = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
         am.setRepeating(AlarmManager.RTC_WAKEUP, time, offset, pendingIntent);
-
+        alarmCallSet=true;
         Toast.makeText(ctx, "Alarm is set at: " + toString(), Toast.LENGTH_LONG).show();
     }
 
     public void cancelAlarm() {
         if(am==null || pendingIntent==null) return;
         am.cancel(pendingIntent);
-
+        alarmCallSet=false;
     }
 
     public boolean isAlarmSet() {
@@ -109,6 +117,10 @@ public class AlarmSetting implements Comparable<AlarmSetting> {
 
         return enabled;
 
+    }
+    //I keep a boolean to see which method was last called, setAlarm or CancelAlarm which should indicate whats going on
+    public boolean isAlarmCallset() {
+        return alarmCallSet;
     }
 
 
@@ -150,9 +162,9 @@ public class AlarmSetting implements Comparable<AlarmSetting> {
     public String toString() {
 
         if (minutes >= 10)
-        return hours > 12 ? hours - 12 + ":" + minutes + " P.M" : hours + ":" + minutes + "A.M";
+        return hours > 12 ? hours - 12 + ":" + minutes + " P.M" : hours + ":" + minutes + " A.M";
         else
-            return hours > 12 ? hours - 12 + ":0" + minutes + " P.M" : hours + ":0" + minutes + "A.M";
+            return hours > 12 ? hours - 12 + ":0" + minutes + " P.M" : hours + ":0" + minutes + " A.M";
 
     }
 
