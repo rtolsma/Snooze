@@ -34,16 +34,14 @@ public class BeepReceiver extends BroadcastReceiver {
      */
 
 
-
-        //creates uniqe id base off of time
+        //creates uniqe id base off of time, messy
         int id= Integer.parseInt( new String(""+System.currentTimeMillis()).substring(4)  );
         Intent snoozeIntent=new Intent(ctx, BeepIntentService.class);
-        PendingIntent snoozePi= PendingIntent.getService(ctx, 0, snoozeIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         Intent stopIntent=new Intent(ctx, BeepIntentService.class);
-        PendingIntent stopPi=PendingIntent.getService(ctx, 0, stopIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-     //create 2 pending intents, one for each action
 
 
+        stopIntent.setAction("Stop this notification" + id);
+        snoozeIntent.setAction("Snooze the ringing" + id);
 
 
         Bundle snoozeAction= new Bundle();
@@ -57,11 +55,22 @@ public class BeepReceiver extends BroadcastReceiver {
         stopAction.putInt("ID", id);
         snoozeIntent.putExtras(snoozeAction);
         stopIntent.putExtras(stopAction);
+
+
+        PendingIntent snoozePi = PendingIntent.getService(ctx, 0, snoozeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent stopPi = PendingIntent.getService(ctx, 0, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        //create 2 pending intents, one for each action
+
+
+
+
+
         Notification.Builder builder=new Notification.Builder(ctx);
         builder.setContentTitle("Alarm has Triggered");
         builder.addAction(R.drawable.clock, " Snooze", snoozePi);
         builder.addAction(R.drawable.blank, "Stop", stopPi);
         builder.setSmallIcon(R.drawable.clock);
+        builder.setPriority(Notification.PRIORITY_MAX);
         Notification notify= builder.build();
         NotificationManager notificationManager= (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(id, notify);

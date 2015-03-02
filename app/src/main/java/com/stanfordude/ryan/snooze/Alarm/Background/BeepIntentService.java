@@ -50,6 +50,7 @@ public class BeepIntentService extends IntentService {
             //code to stop ringing here
            // set new alarm to go off in snoozeLength more minutes... somewhat recursive paradigm
             Intent newIntent=new Intent(ctx, BeepReceiver.class);
+            newIntent.setAction("Snooze restart for notification: " + id);
             PendingIntent pi= PendingIntent.getBroadcast(ctx, 0, newIntent, 0);
             cal.add(Calendar.MINUTE, snoozeLength);
              ((AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE)).set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
