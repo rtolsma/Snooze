@@ -38,7 +38,7 @@ Plan for Notification Paradigm for user alarms:
     AlarmManager will trigger the BeepReceiver, the BeepReceiver will create a notification with the actions directed towards the intent service
      and then will feed the intent service with an intent that states that it should start ringing. Intents received from the notification
      actions will be dealt with accordingly (messy put extras stuff) . If it is to snooze, then the intent service will create a
-      new Alarmsetting and set its alarm minutes+snoozeLength minutes later. This will retrigger the notification to fire, but
+      new Alarmsetting and set its alarm minutes+snoozeLength minutes later. This will retrigger the notification to fire (recursive) , but
       will keep the same snoozelength present. If the stop button is pressed, then the intent service will be notified and will concurrently
       stop ringing.
 
@@ -48,11 +48,25 @@ Plan for Notification Paradigm for user alarms:
     TODO figure out how snoozing will work, maybe an intent extra value?
 
 
+     So far, the above seems to have been implemented roughly. I need to write in the code for the ringtones still. After that, I need to
+     implement a system for the alarms to be reestablished after a reboot. Ideas include calling setAlarm() on the AlarmSettings after
+     creating them from the Shared Preference Values. I will need to do some testing to make sure that this side of the project is working
+     on the backend at least. I will work on making the ui better towards the end, maybe with my associate @ngildenhuys.
 
 
 
 
+******************************************************************************************************************************************
+                        This is the plan for the 2nd half of this app, and the more interesting part.
 
+       2nd half will consist of a simillar ui to the 1st half, but instead of being wakeup alarms, they will be used to schedule
+       text messaging in an sms form. Basically, I plan on keeping the code of these two halves very similar except that in their
+       separate intent services, where it will text a contact/group of contacts instead of playing the ringtone. Use another class to keep
+       the info needed, similar to AlarmSetting, but will contain a message, and a listview of contacts to send it to.
+
+
+       Possible Problems: how will alarms that are set at the same time work????????????? Likely chance that that may happen
+       since two different messages may have to be sent at the same time.
 
 
 

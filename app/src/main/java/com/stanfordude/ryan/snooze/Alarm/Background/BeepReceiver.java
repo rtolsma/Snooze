@@ -25,59 +25,63 @@ public class BeepReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context ctx, Intent intent) {
-        //start the ringing
-        Intent initial=new Intent(ctx, BeepIntentService.class);
-        initial.putExtra("Startup", true);
-        ctx.startService(initial);
+        if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
+            //do something on boot
+            new String("");
+
+        } else {
+
+
+            //start the ringing
+            Intent initial = new Intent(ctx, BeepIntentService.class);
+            initial.putExtra("Startup", true);
+            ctx.startService(initial);
     /*
     Testing whether flag_cancel_current will help right now
      */
 
 
-        //creates uniqe id base off of time, messy
-        int id= Integer.parseInt( new String(""+System.currentTimeMillis()).substring(4)  );
-        Intent snoozeIntent=new Intent(ctx, BeepIntentService.class);
-        Intent stopIntent=new Intent(ctx, BeepIntentService.class);
+            //creates uniqe id base off of time, messy
+            int id = Integer.parseInt(new String("" + System.currentTimeMillis()).substring(4));
+            Intent snoozeIntent = new Intent(ctx, BeepIntentService.class);
+            Intent stopIntent = new Intent(ctx, BeepIntentService.class);
 
 
-        stopIntent.setAction("Stop this notification" + id);
-        snoozeIntent.setAction("Snooze the ringing" + id);
+            stopIntent.setAction("Stop this notification" + id);
+            snoozeIntent.setAction("Snooze the ringing" + id);
 
 
-        Bundle snoozeAction= new Bundle();
-        Bundle stopAction = new Bundle();
-        snoozeLength=intent.getIntExtra("snooze", 1);
-        snoozeAction.putInt("snoozeLength", snoozeLength);
-        stopAction.putInt("snoozeLength", snoozeLength);
-        snoozeAction.putBoolean("STOP", false);
-        stopAction.putBoolean("STOP", true);
-        snoozeAction.putInt("ID", id);
-        stopAction.putInt("ID", id);
-        snoozeIntent.putExtras(snoozeAction);
-        stopIntent.putExtras(stopAction);
+            Bundle snoozeAction = new Bundle();
+            Bundle stopAction = new Bundle();
+            snoozeLength = intent.getIntExtra("snooze", 1);
+            snoozeAction.putInt("snoozeLength", snoozeLength);
+            stopAction.putInt("snoozeLength", snoozeLength);
+            snoozeAction.putBoolean("STOP", false);
+            stopAction.putBoolean("STOP", true);
+            snoozeAction.putInt("ID", id);
+            stopAction.putInt("ID", id);
+            snoozeIntent.putExtras(snoozeAction);
+            stopIntent.putExtras(stopAction);
 
 
-        PendingIntent snoozePi = PendingIntent.getService(ctx, 0, snoozeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent stopPi = PendingIntent.getService(ctx, 0, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        //create 2 pending intents, one for each action
+            PendingIntent snoozePi = PendingIntent.getService(ctx, 0, snoozeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent stopPi = PendingIntent.getService(ctx, 0, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            //create 2 pending intents, one for each action
 
 
-
-
-
-        Notification.Builder builder=new Notification.Builder(ctx);
-        builder.setContentTitle("Alarm has Triggered");
-        builder.addAction(R.drawable.clock, " Snooze", snoozePi);
-        builder.addAction(R.drawable.blank, "Stop", stopPi);
-        builder.setSmallIcon(R.drawable.clock);
-        builder.setPriority(Notification.PRIORITY_MAX);
-        Notification notify= builder.build();
-        NotificationManager notificationManager= (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(id, notify);
-        Toast.makeText(ctx, "Broadcast Received from alarm scheduled for " + intent.getAction(), Toast.LENGTH_LONG).show();
-        Log.d("BeepIntentService", "Received Broadcast from alarm scheduled at "+intent.getAction());
+            Notification.Builder builder = new Notification.Builder(ctx);
+            builder.setContentTitle("Alarm has Triggered");
+            builder.addAction(R.drawable.clock, " Snooze", snoozePi);
+            builder.addAction(R.drawable.blank, "Stop", stopPi);
+            builder.setSmallIcon(R.drawable.clock);
+            builder.setPriority(Notification.PRIORITY_MAX);
+            Notification notify = builder.build();
+            NotificationManager notificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(id, notify);
+            Toast.makeText(ctx, "Broadcast Received from alarm scheduled for " + intent.getAction(), Toast.LENGTH_LONG).show();
+            Log.d("BeepIntentService", "Received Broadcast from alarm scheduled at " + intent.getAction());
+        }
     }
-
 
 
 }
